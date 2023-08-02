@@ -13,6 +13,7 @@ const emojis = {
     'GAME_OVER': '👎',
     'WIN': '🏆',
     'HEART': '❤️',
+    'EXPLOTION': '💥',
   };
   
   const maps = [];

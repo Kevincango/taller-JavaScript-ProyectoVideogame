@@ -12,11 +12,13 @@ const spanLives = document.querySelector('#lives');
 const spanTime = document.querySelector('#time');
 const spanRecord = document.querySelector('#record');
 const pResult = document.querySelector('#result');
+const contenedorBotonoes = document.querySelector('#contenedor-botones');
 
 let canvasSize;
 let elementSize;
 let timeStart;
 let timePlayer;
+let btnReiniciar;
 let recordPlayer = 0;
 let timeInterval;
 let level = 0;
@@ -128,9 +130,11 @@ function moverPlayer(){
         levelUp();
     }else if(bombaCollisionXY){
         console.log('Tocaste una bomba');
-        gameFailed();
+        game.fillText(emojis['EXPLOTION'],playerPosition.x,playerPosition.y);
+       setTimeout(gameFailed,1000);
+    }else{
+        game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y);
     }
-    game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y);
 }
 
 function levelUp(){
@@ -153,9 +157,11 @@ function gameWin(){
         pResult.innerHTML = 'NO SUPERASTE EL RECORD 🥺';
     }
    }else{
-    timeRecord = localStorage.setItem('record',timePlayer);
+    localStorage.setItem('record',timePlayer);
     pResult.innerHTML = '¿Primera vez?, intenta de nuevo y supera tu record';
    }
+
+   reiniciarJuego();
 }
 
 function gameFailed(){
@@ -191,6 +197,15 @@ function showTime(){
 
 function showRecord(){
     spanRecord.innerHTML = localStorage.getItem('record');
+}
+
+function reiniciarJuego(){
+    btnReiniciar =  `
+    <button id="reinicio-juego" class="btns">Reiniciar</button>
+    `
+    contenedorBotonoes.innerHTML = btnReiniciar;
+    const buttonReinicio = document.querySelector('#reinicio-juego');
+    buttonReinicio.addEventListener('click',()=> location.reload());
 }
 
 window.addEventListener('keydown',sePresionoUnaTecla);
